@@ -69,7 +69,7 @@ export default class HannyaRoller {
       const nLettersInLine = Math.floor(surfaceHeight / fontSize);
       const nLines = Math.ceil(length / nLettersInLine) + 1;
       const width = nLines * fontSize;
-      if (width < (surfaceWidth / 2)) {
+      if (width < surfaceWidth / 2) {
         layout.fontSize = fontSize;
         layout.nLettersInLine = nLettersInLine;
         layout.nLines = nLines;
@@ -83,10 +83,7 @@ export default class HannyaRoller {
    * @param {IRollerLayout} layout
    */
   _render ({
-    fontSize,
-    nLettersInLine,
-    nLines,
-    surfaceHeight,
+    fontSize, nLettersInLine, nLines, surfaceHeight,
   }) {
     this.elRoller.style.setProperty('--surface-height', `${surfaceHeight}px`);
     this.elRoller.style.setProperty('--font-size', `${fontSize}px`);
@@ -95,15 +92,14 @@ export default class HannyaRoller {
     this.elRoller.innerHTML = '';
 
     // faster than for()
-    const elLineList = new Array(nLines).fill(0)
-      .map((_, index) => {
-        const elLine = document.createElement('div');
-        elLine.classList.add('HannyaRoller-line');
-        elLine.style.setProperty('--line-index', `${index}`);
-        this.elRoller.appendChild(elLine);
+    const elLineList = new Array(nLines).fill(0).map((_, index) => {
+      const elLine = document.createElement('div');
+      elLine.classList.add('HannyaRoller-line');
+      elLine.style.setProperty('--line-index', `${index}`);
+      this.elRoller.appendChild(elLine);
 
-        return elLine;
-      });
+      return elLine;
+    });
 
     this.elLetterList.forEach((elLetter, index) => {
       const lineIndex = Math.floor(index / nLettersInLine);
@@ -118,12 +114,12 @@ export default class HannyaRoller {
     const progressOffset = -(initialAnimationDuration / (60000 / rpm));
 
     const startedAt = Date.now();
-    const cycle = 1000 * 60 / rpm;
+    const cycle = (1000 * 60) / rpm;
 
     this.destroyAnimation = animate(60, () => {
       const timeProgress = ((Date.now() - startedAt) % cycle) / cycle;
       const sum = progressOffset + timeProgress;
-      const progress = (sum) - Math.floor(sum);
+      const progress = sum - Math.floor(sum);
       this.elSpace.style.setProperty('--rotation-progress', `${progress}`);
     });
   }
