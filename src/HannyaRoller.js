@@ -45,7 +45,7 @@ export default class HannyaRoller {
       const elLetter = document.createElement('div');
       elLetter.classList.add('HannyaRoller-letter');
       elLetter.textContent = letter;
-      return elLetter;
+      return elLetter
     });
   }
 
