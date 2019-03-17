@@ -6,8 +6,8 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
+  - npm run type-check
   - npm run lint
-  - npm run test
   - npm run test -- --coverage
   - NODE_ENV=production npm run build
 after_script:
